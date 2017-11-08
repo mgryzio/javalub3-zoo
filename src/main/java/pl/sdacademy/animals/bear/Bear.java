@@ -52,5 +52,4 @@ public abstract class Bear implements Animal {
         this.weight = getWeight() - (getWeight() * 0.05);
     }
 
-    public abstract boolean isHibernating();
 }

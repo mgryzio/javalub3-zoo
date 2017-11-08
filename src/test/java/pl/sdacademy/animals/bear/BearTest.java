@@ -2,14 +2,8 @@ package pl.sdacademy.animals.bear;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.LocalDate;
-import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormat;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.*;
-import pl.sdacademy.clock.DateTimeClock;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BearTest {
 
@@ -18,19 +12,16 @@ class BearTest {
         Bear bear = new BlackBear(1);
         bear.eat(0);
 
-        boolean result = bear.isAlive();
-
-        assertTrue(result == true);
+        assertThat(bear.isAlive()).isTrue();
     }
 
     @Test
     void feedingBearShouldSetTheDateOfTheLastMealForNow() {
         Bear bear = new BlackBear(1);
-//        bear.eat(0);
+        bear.eat(0);
 
-        DateTime result = bear.getLastMealTime();
-
-        assertTrue(new Duration(result, DateTime.now()).isShorterThan(Duration.standardSeconds(1)));
+        assertThat(new Duration(bear.getLastMealTime(), DateTime.now()).isShorterThan(Duration.standardSeconds(1)))
+                .isTrue();
     }
 
     @Test

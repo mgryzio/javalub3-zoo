@@ -6,6 +6,8 @@ import pl.sdacademy.clock.Clock
 import spock.lang.Specification
 import static org.assertj.core.api.Assertions.*;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat
+
 
 class BearSpec extends Specification {
 
@@ -18,7 +20,7 @@ class BearSpec extends Specification {
         def result = bear.isAlive()
 
         then:
-        result == true
+        assertThat(result).isTrue()
 
         where:
         testBear << [new BlackBear(5), new PolarBear(20)]
@@ -44,7 +46,20 @@ class BearSpec extends Specification {
         def result = bear.isAlive()
 
         then:
-        result == false
+        assertThat(result).isFalse()
+    }
+
+    def "Black bear should be hibernating if it is after 20 november"() {
+        given:
+        Clock clock = Mock(Clock)
+        clock.getCurrentTime() >> new DateTime(2017, 12, 01, 14, 0)
+        BlackBear bear = new BlackBear(1, clock)
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        assertThat(result).isTrue()
     }
 
     def "When bear ate sth, then his weight raised"() {

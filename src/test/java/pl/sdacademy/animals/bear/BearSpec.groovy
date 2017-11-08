@@ -4,8 +4,6 @@ import org.joda.time.DateTime
 import org.joda.time.Duration
 import pl.sdacademy.clock.Clock
 import spock.lang.Specification
-import static org.assertj.core.api.Assertions.*;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat
 
 
@@ -102,13 +100,78 @@ class BearSpec extends Specification {
         given:
         Clock clock = Mock(Clock)
         clock.getCurrentTime() >> new DateTime(2017, 12, 01, 14, 0)  // >> tzn. że jeśli ktoś wykonana metodę getCurrentTime() to przypisz taką wartość
-        BlackBear bear = new BlackBear(1, new TestClock())
+        BlackBear bear = new BlackBear(1, clock)
 
         when:
-        boolean result = isHibernating()
+        boolean result = bear.isHibernating()
 
         then:
         assertThat(result).isTrue()
+    }
+
+    def "Black bear should be hibernating if it is before 15 March"() {
+        given:
+        Clock clock = Mock(Clock)
+        clock.getCurrentTime() >> new DateTime(2017, 2, 15, 9, 0)
+        BlackBear bear = new BlackBear(1, clock)
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        assertThat(result).isTrue()
+    }
+
+    def "Black bear shouldn't be hibernating if it is before 20 November"() {
+        given:
+        Clock clock = Mock(Clock)
+        clock.getCurrentTime() >> new DateTime(2017, 11, 19, 15, 0)
+        BlackBear bear = new BlackBear(1, clock)
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        result == false
+    }
+
+    def "Black bear shouldn't be hibernating if it is after 15 March"() {
+        given:
+        Clock clock = Mock(Clock)
+        clock.getCurrentTime() >> new DateTime(2017, 4, 15, 0, 0)
+        BlackBear bear = new BlackBear(1, clock)
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        result == false
+    }
+
+    def "Polar bear should be hibernating if it is between 5 May and 10 October"() {
+        given:
+        Clock clock = Mock(Clock)
+        clock.getCurrentTime() >> new DateTime(2017, 5, 6, 0, 0)
+        PolarBear bear = new PolarBear(1, clock)
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        result
+    }
+
+    def "Polar bear should nor be sleep if it is betwen 11 October and 4 May"() {
+        given:
+        Clock clock = Mock(Clock)
+        clock.getCurrentTime() >> new DateTime(2017, 05, 04, 0, 0)
+        PolarBear bear = new PolarBear(1, clock)
+
+        when:
+        boolean result = bear.isHibernating()
+
+        then:
+        result == false
     }
 
 }

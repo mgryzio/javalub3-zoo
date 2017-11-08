@@ -3,7 +3,12 @@ package pl.sdacademy.animals.bear;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import pl.sdacademy.clock.Clock;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class BearTest {
 
@@ -60,11 +65,14 @@ class BearTest {
         assertThat(bear.getWeight() == 0.95).isTrue();
     }
 
-//    @Test
-//    void hibernatingTimeForBlackBearIsFrom20thNovemberTo13thMarch() {
-//        Bear bear = new BlackBear(4, new DateTimeClock());
-//        bear.isHibernating();
-//
-//        assertThat().isTrue;
-//    }
+    @Test
+    void blackBearShouldBeHibernatingAfter20thNovember() {
+        Clock clock = mock(Clock.class);
+        when(clock.getCurrentTime()).thenReturn(new DateTime(2017, 12, 01, 14, 0));
+        BlackBear bear = new BlackBear(1, clock);
+
+        assertThat(bear.isHibernating()).isTrue();
+    }
+
+
 }

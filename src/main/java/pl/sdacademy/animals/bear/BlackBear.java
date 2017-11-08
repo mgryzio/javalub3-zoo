@@ -7,7 +7,7 @@ import org.joda.time.LocalDateTime;
 import pl.sdacademy.clock.Clock;
 
 public class BlackBear extends Bear {
-    public BlackBear(int weight, Clock clock) {
+    public BlackBear(double weight, Clock clock) {
         super(weight, clock);
     }
 
@@ -15,7 +15,10 @@ public class BlackBear extends Bear {
         super(weight);
     }
 
-//    public boolean isHibernating() {
-//        boolean result = DateTime.
-//    }
+    @Override
+    public boolean isHibernating() {
+        LocalDate twientiethNovember = new LocalDate(clock.getCurrentTime().getYear(), 11, 20);
+
+        return clock.getCurrentTime().toLocalDate().isAfter(twientiethNovember);
+    }
 }

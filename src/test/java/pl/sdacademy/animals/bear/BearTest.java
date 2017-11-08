@@ -3,6 +3,8 @@ package pl.sdacademy.animals.bear;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import pl.sdacademy.clock.DateTimeClock;
@@ -56,22 +58,22 @@ class BearTest {
         Bear bear = new BlackBear(4);
         bear.drink(1);
 
-        assertThat(bear.getWeight() == 4.75);
+        assertThat(bear.getWeight() == 4.75).isTrue();
     }
 
     @Test
-    void afterpoop() {
+    void afterPoop() {
         Bear bear = new BlackBear(1);
         bear.poop();
 
-        assertThat(bear.getWeight() == 0.95);
+        assertThat(bear.getWeight() == 0.95).isTrue();
     }
 
 //    @Test
-//    void hibernatingTimeForBlackBear() {
-//        Bear bear = new BlackBear(4);
+//    void hibernatingTimeForBlackBearIsFrom20thNovemberTo13thMarch() {
+//        Bear bear = new BlackBear(4, new DateTimeClock());
 //        bear.isHibernating();
 //
-//        assertThat(LocalDate.now().plusDays(20)).isTrue;
+//        assertThat().isTrue;
 //    }
 }

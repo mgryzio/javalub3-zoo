@@ -12,7 +12,7 @@ public abstract class Bear implements Animal {
     private double weight;
 
     private DateTime lastMealTime;
-    private Clock clock;
+    Clock clock;
 
     public DateTime getLastMealTime() {
         return lastMealTime;
@@ -24,7 +24,7 @@ public abstract class Bear implements Animal {
         this.weight = weight;
     }
 
-    public Bear(int weight, Clock clock) {
+    public Bear(double weight, Clock clock) {
         this(weight);
         this.clock = clock;
     }
@@ -52,4 +52,5 @@ public abstract class Bear implements Animal {
         this.weight = getWeight() - (getWeight() * 0.05);
     }
 
+    public abstract boolean isHibernating();
 }

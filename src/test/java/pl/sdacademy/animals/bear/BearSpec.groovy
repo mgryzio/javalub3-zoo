@@ -4,6 +4,7 @@ import org.joda.time.DateTime
 import org.joda.time.Duration
 import pl.sdacademy.clock.Clock
 import spock.lang.Specification
+import static org.assertj.core.api.Assertions.*;
 
 
 class BearSpec extends Specification {
@@ -80,6 +81,19 @@ class BearSpec extends Specification {
 
         then:
         result == 0.95
+    }
+
+    def "Black bear should be hibernating if it is after 20 November"() {
+        given:
+        Clock clock = Mock(Clock)
+        clock.getCurrentTime() >> new DateTime(2017, 12, 01, 14, 0)  // >> tzn. że jeśli ktoś wykonana metodę getCurrentTime() to przypisz taką wartość
+        BlackBear bear = new BlackBear(1, new TestClock())
+
+        when:
+        boolean result = isHibernating()
+
+        then:
+        assertThat(result).isTrue()
     }
 
 }
